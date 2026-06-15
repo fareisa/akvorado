@@ -10,14 +10,14 @@ flow:
       # of the documentation.
       receive-buffer: 212992
     # IPFIX port
-    - type: udp
-      decoder: netflow
-      listen: :4739
-      workers: 4
-      receive-buffer: 212992
-    # sFlow port
-    - type: udp
-      decoder: sflow
-      listen: :6343
-      workers: 4
-      receive-buffer: 212992
+    # - type: udp
+    #   decoder: netflow
+    #   listen: :4739
+    #   workers: 4
+    #   receive-buffer: 212992
+    # # sFlow port
+    # - type: udp
+    #   decoder: sflow
+    #   listen: :6343
+    #   workers: 4
+    #   receive-buffer: 212992

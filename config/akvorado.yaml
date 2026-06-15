@@ -43,11 +43,14 @@ geoip:
   # - /usr/share/GeoIP/GeoLite2-Country.mmdb
 
 clickhousedb:
-  servers:
-    - clickhouse:9000
+  servers: 10.8.0.1:4670
+  username: "default"
+  password: "sjnb2u3v24ghb"
+  cluster: "lab_cluster"
+  database: "netflow"
 
 clickhouse:
-  orchestrator-url: http://akvorado-orchestrator:8080
+  orchestrator-url: http://10.8.0.8:8091
   prometheus-endpoint: /metrics
   asns:
     64501: ACME Corporation
@@ -66,21 +69,20 @@ clickhouse:
     2a01:db8:cafe:2::/64:
       name: ipv6-servers
       role: servers
-  network-sources: []
-
-  # network-sources:
-    # amazon:
-    #   url: https://ip-ranges.amazonaws.com/ip-ranges.json
-    #   interval: 6h
-    #   transform: |
-    #     (.prefixes + .ipv6_prefixes)[] |
-    #     { prefix: (.ip_prefix // .ipv6_prefix), tenant: "amazon", region: .region, role: .service|ascii_downcase }
-    # gcp:
-    #   url: https://www.gstatic.com/ipranges/cloud.json
-    #   interval: 6h
-    #   transform: |
-    #     .prefixes[] |
-    #     { prefix: (.ipv4Prefix // .ipv6Prefix), tenant: "google-cloud", region: .scope }
+  # network-sources: []
+  network-sources:
+    amazon:
+      url: https://ip-ranges.amazonaws.com/ip-ranges.json
+      interval: 6h
+      transform: |
+        (.prefixes + .ipv6_prefixes)[] |
+        { prefix: (.ip_prefix // .ipv6_prefix), tenant: "amazon", region: .region, role: .service|ascii_downcase }
+    gcp:
+      url: https://www.gstatic.com/ipranges/cloud.json
+      interval: 6h
+      transform: |
+        .prefixes[] |
+        { prefix: (.ipv4Prefix // .ipv6Prefix), tenant: "google-cloud", region: .scope }
     # netbox:
     #   url: "https://netbox.domain.tld/api/ipam/prefixes/?limit=0"
     #   interval: 6h
@@ -96,13 +98,13 @@ clickhouse:
     #       role: .role.name,
     #       name: .description
     #     }
-    # nerd-scan:
-    #   url: https://nerd.cesnet.cz/nerd/data/bl_scan.txt
-    #   parser: plain
-    #   interval: 24h
-    #   transform: |
-    #     .[] | select(startswith("#") | not) |
-    #     { prefix: . + "/32", tenant: "nerd", role: "nerd-scan" }
+    nerd-scan:
+      url: https://nerd.cesnet.cz/nerd/data/bl_scan.txt
+      parser: plain
+      interval: 24h
+      transform: |
+        .[] | select(startswith("#") | not) |
+        { prefix: . + "/32", tenant: "nerd", role: "nerd-scan" }
 
 inlet: !include "inlet.yaml"
 outlet: !include "outlet.yaml"
