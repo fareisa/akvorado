@@ -13,12 +13,14 @@
 # only help you get the default values.
 
 kafka:
+  # consumer-group: wahaha-group
   topic: flows
   brokers:
-    - kafka:9092
+    - lab1:9092
+    - lab2:9092
   topic-configuration:
     num-partitions: 8
-    replication-factor: 1
+    replication-factor: 2
     config-entries:
       # The retention policy in Kafka is mainly here to keep a buffer
       # for ClickHouse.
@@ -50,7 +52,7 @@ clickhousedb:
   database: "netflow"
 
 clickhouse:
-  orchestrator-url: http://10.8.0.8:8091
+  orchestrator-url: http://orchestrator.akvorado.local
   prometheus-endpoint: /metrics
   asns:
     64501: ACME Corporation

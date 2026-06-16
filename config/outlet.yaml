@@ -1,4 +1,7 @@
 ---
+kafka:
+  consumer-group: wahaha-group
+
 metadata:
   providers:
     - type: snmp
