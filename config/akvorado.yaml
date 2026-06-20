@@ -45,7 +45,7 @@ geoip:
   # - /usr/share/GeoIP/GeoLite2-Country.mmdb
 
 clickhousedb:
-  servers: 10.8.0.1:4670
+  servers: 247.16.14.1:9000
   username: "default"
   password: "sjnb2u3v24ghb"
   cluster: "lab_cluster"

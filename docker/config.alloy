@@ -92,7 +92,7 @@ prometheus.scrape "redis" {
 }
 
 prometheus.exporter.kafka "docker" {
-  kafka_uris = ["kafka:9092"]
+  kafka_uris = ["lab1:9092"]
 }
 discovery.relabel "kafka" {
   targets = prometheus.exporter.kafka.docker.targets

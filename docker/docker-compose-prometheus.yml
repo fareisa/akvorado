@@ -58,8 +58,8 @@ services:
     depends_on:
       prometheus:
         condition: service_healthy
-      kafka:
-        condition: service_healthy
+      # kafka:
+      #   condition: service_healthy
     labels:
       - traefik.enable=true
       - traefik.http.routers.alloy.rule=PathPrefix(`/alloy`)

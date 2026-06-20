@@ -5,39 +5,11 @@ networks:
     ipam:
       config:
         - subnet: 247.16.14.0/24
+          gateway: 247.16.14.1
         # - subnet: fd1c:8ce3:6fb:1::/64
     driver: bridge
     driver_opts:
       com.docker.network.bridge.name: br-akvorado
-
-# volumes:
-#   akvorado-kafka:
-#     driver: local
-#     driver_opts:
-#       type: "none"
-#       o: "bind"
-#       device: "/root/opt/akvorado/kafka"
-
-#   akvorado-geoip:
-#     driver: local
-#     driver_opts:
-#       type: "none"
-#       o: "bind"
-#       device: "/root/opt/akvorado/geoip"
-
-#   akvorado-run:
-#     driver: local
-#     driver_opts:
-#       type: "none"
-#       o: "bind"
-#       device: "/root/opt/akvorado/akvorado"
-
-#   akvorado-console-db:
-#     driver: local
-#     driver_opts:
-#       type: "none"
-#       o: "bind"
-#       device: "/root/opt/akvorado/akvorado-db"
 
 volumes:
   # akvorado-kafka:
@@ -129,6 +101,7 @@ services:
       - traefik.http.services.akvorado-orchestrator.loadbalancer.server.port=8080
       - metrics.enable=true
       - metrics.path=/api/v0/metrics
+      
   akvorado-console:
     extends:
       file: versions.yml
@@ -169,6 +142,7 @@ services:
       - traefik.http.middlewares.console-auth.headers.customrequestheaders.Remote-Email=alfred@example.com
       - metrics.enable=true
       - metrics.path=/api/v0/metrics
+
   akvorado-inlet:
     extends:
       file: versions.yml
@@ -199,12 +173,13 @@ services:
       - metrics.enable=true
       - metrics.port=8080
       - metrics.path=/api/v0/metrics
+
   akvorado-outlet:
     extends:
       file: versions.yml
       service: akvorado
     ports:
-      - 10179:10179/tcp
+      - 10179/tcp
     restart: unless-stopped
     stop_grace_period: 30s
     depends_on:
@@ -233,6 +208,10 @@ services:
       - metrics.enable=true
       - metrics.port=8080
       - metrics.path=/api/v0/metrics
+
+      # - traefik.tcp.routers.akvorado-outlet.entrypoints=bmp
+      # # - traefik.tcp.routers.akvorado-outlet.rule=PathPrefix(`/api/v0/outlet`)
+      # - traefik.tcp.services.akvorado-outlet.loadbalancer.server.port=10179
 
   # clickhouse:
   #   extends:
@@ -276,9 +255,10 @@ services:
       TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: "false"
       TRAEFIK_ENTRYPOINTS_private_ADDRESS: ":8080" # all services
       TRAEFIK_ENTRYPOINTS_private_HTTP_MIDDLEWARES: compress@docker
-      TRAEFIK_ENTRYPOINTS_public_ADDRESS: ":8081"  # public services only
       TRAEFIK_ENTRYPOINTS_public_HTTP_MIDDLEWARES: compress@docker
+      TRAEFIK_ENTRYPOINTS_public_ADDRESS: ":8081"  # public services only
       TRAEFIK_ACCESSLOG: "true"
+      # TRAEFIK_ENTRYPOINTS_bmp_ADDRESS: ":10179"
     labels:
       - traefik.enable=true
       - "traefik.http.routers.traefik.rule=PathPrefix(`/traefik`) && !PathPrefix(`/traefik/debug`)"
@@ -308,7 +288,8 @@ services:
       # services (ClickHouse, configuration, ...). Therefore, it is only exposed
       # on the loopback. Port 8081 is the one you can expose to users. Check
       # docker-compose-local.yml if you want to expose directly on port 80.
-      - 127.0.0.1:8090:8080/tcp
+      - 8090:8080/tcp
       - 80:8081/tcp
+      # - 10179:10179/tcp
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
