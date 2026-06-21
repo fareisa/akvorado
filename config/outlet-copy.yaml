@@ -29,36 +29,16 @@ core:
     # - ClassifyRole("edge")
   interface-classifiers:
     - |
-      ClassifyConnectivityRegex(
-        Interface.Name,
-        "^(ether1)$",
-        "WAN"
-      ) &&
-      ClassifyProviderRegex(Interface.Description, "^(.*)$", "$1") &&
+      ClassifyConnectivityRegex(Interface.Description, "^(?i)(WAN):? ", "$1") &&
+      ClassifyProviderRegex(Interface.Description, "^\\S+?\\s(\\S+)", "$1") &&
       ClassifyExternal()
 
-    # - |
-    #   ClassifyConnectivityRegex(
-    #     Interface.Name,
-    #     "^(wg1|wg0)$",
-    #     "tunnel"
-    #   ) &&
-    #   ClassifyInternal()
-
     - |
-      ClassifyConnectivityRegex(
-        Interface.Name,
-        "^(wg.*)$",
-        "wireguard"
-      ) &&
+      ClassifyConnectivityRegex(Interface.Name, "^wg.*$", "wireguard") &&
       ClassifyInternal()
 
     - |
-      ClassifyConnectivityRegex(
-        Interface.Name,
-        "^(tailscale.*)$",
-        "tailscale"
-      ) &&
+      ClassifyConnectivityRegex(Interface.Name, "^tailscale.*$", "tailscale") &&
       ClassifyInternal()
 
     - | 

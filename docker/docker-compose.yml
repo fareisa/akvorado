@@ -143,43 +143,43 @@ services:
       - metrics.enable=true
       - metrics.path=/api/v0/metrics
 
-  akvorado-inlet:
-    extends:
-      file: versions.yml
-      service: akvorado
-    ports:
-      - 2055:2055/udp
-      - 4739:4739/udp
-      - 6343:6343/udp
-    restart: unless-stopped
-    depends_on:
-      akvorado-orchestrator:
-        condition: service_healthy
-      # kafka:
-      #   condition: service_healthy
-    command: inlet http://akvorado-orchestrator:8080
-    volumes:
-      - akvorado-run:/run/akvorado
-    labels:
-      - traefik.enable=true
-      # Disable access logging of /api/v0/inlet/metrics
-      - traefik.http.routers.akvorado-inlet-metrics.rule=PathPrefix(`/api/v0/inlet/metrics`)
-      - traefik.http.routers.akvorado-inlet-metrics.service=akvorado-inlet
-      - traefik.http.routers.akvorado-inlet-metrics.observability.accesslogs=false
-      # Everything else is exposed to private entrypoint in /api/v0/inlet
-      - traefik.http.routers.akvorado-inlet.entrypoints=private
-      - traefik.http.routers.akvorado-inlet.rule=PathPrefix(`/api/v0/inlet`)
-      - traefik.http.services.akvorado-inlet.loadbalancer.server.port=8080
-      - metrics.enable=true
-      - metrics.port=8080
-      - metrics.path=/api/v0/metrics
+  # akvorado-inlet:
+  #   extends:
+  #     file: versions.yml
+  #     service: akvorado
+  #   ports:
+  #     - 2055:2055/udp
+  #     - 4739:4739/udp
+  #     - 6343:6343/udp
+  #   restart: unless-stopped
+  #   depends_on:
+  #     akvorado-orchestrator:
+  #       condition: service_healthy
+  #     # kafka:
+  #     #   condition: service_healthy
+  #   command: inlet http://akvorado-orchestrator:8080
+  #   volumes:
+  #     - akvorado-run:/run/akvorado
+  #   labels:
+  #     - traefik.enable=true
+  #     # Disable access logging of /api/v0/inlet/metrics
+  #     - traefik.http.routers.akvorado-inlet-metrics.rule=PathPrefix(`/api/v0/inlet/metrics`)
+  #     - traefik.http.routers.akvorado-inlet-metrics.service=akvorado-inlet
+  #     - traefik.http.routers.akvorado-inlet-metrics.observability.accesslogs=false
+  #     # Everything else is exposed to private entrypoint in /api/v0/inlet
+  #     - traefik.http.routers.akvorado-inlet.entrypoints=private
+  #     - traefik.http.routers.akvorado-inlet.rule=PathPrefix(`/api/v0/inlet`)
+  #     - traefik.http.services.akvorado-inlet.loadbalancer.server.port=8080
+  #     - metrics.enable=true
+  #     - metrics.port=8080
+  #     - metrics.path=/api/v0/metrics
 
   akvorado-outlet:
     extends:
       file: versions.yml
       service: akvorado
-    ports:
-      - 10179/tcp
+    # ports:
+    #   - 10179/tcp
     restart: unless-stopped
     stop_grace_period: 30s
     depends_on:
@@ -202,7 +202,7 @@ services:
       - traefik.http.routers.akvorado-outlet-metrics.service=akvorado-outlet
       - traefik.http.routers.akvorado-outlet-metrics.observability.accesslogs=false
       # Everything else is exposed to private entrypoint in /api/v0/outlet
-      - traefik.http.routers.akvorado-outlet.entrypoints=private
+      # - traefik.http.routers.akvorado-outlet.entrypoints=private
       - traefik.http.routers.akvorado-outlet.rule=PathPrefix(`/api/v0/outlet`)
       - traefik.http.services.akvorado-outlet.loadbalancer.server.port=8080
       - metrics.enable=true

@@ -54,7 +54,7 @@ clickhouse:
   orchestrator-url: http://orchestrator.akvorado.local
   prometheus-endpoint: /metrics
   asns:
-    64501: ACME Corporation
+    64501: Wahaha-lab
   networks:
       # You should customize this section with your networks. This
     # populates the Src/DstNetName/Role/Site/Region/Tenant fields.
@@ -74,33 +74,27 @@ clickhouse:
     192.168.1.0/24:
       name: ipv4-nethome
       role: isp
-      region: kos
-      site: lab2
+      site: kos
     192.168.100.0/24:
       name: ipv4-xl-home
       role: isp
-      region: rumah
-      site: lab1
+      site: rumah    
     192.168.11.0/24:
       name: ipv4-server-1
       role: server
-      region: rumah
-      site: lab1
+      site: rumah
     192.168.12.0/24:
       name: ipv4-server-2
       role: server
-      region: rumah
-      site: lab1
+      site: rumah
     172.16.10.0/24:
       name: ipv4-wifi-rumah
       role: wifi
-      region: rumah
-      site: lab1
+      site: rumah
     172.16.20.0/24:
       name: ipv4-wifi-p2p
       role: wifi
-      region: rumah
-      site: lab1
+      site: rumah
 
     10.8.0.0/24:
       name: ipv4-wireguard
@@ -108,13 +102,11 @@ clickhouse:
     100.93.213.53/32:
       name: ipv4-tailscale-lab1
       role: tunnel
-      region: rumah
-      site: lab1
+      site: rumah
     100.86.1.12/32:
       name: ipv4-tailscale-lab2
       role: tunnel
-      region: kos
-      site: lab2
+      site: kos
 
   # network-sources: []
   network-sources:
