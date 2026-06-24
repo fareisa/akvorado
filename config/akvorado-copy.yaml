@@ -54,7 +54,10 @@ clickhouse:
   orchestrator-url: http://orchestrator.akvorado.local
   prometheus-endpoint: /metrics
   asns:
-    0: Wahaha-lab
+    64512: rumah-network
+    64513: kos-network
+    64514: wireguard-network
+    64515: tailscale-network
   networks:
       # You should customize this section with your networks. This
     # populates the Src/DstNetName/Role/Site/Region/Tenant fields.
@@ -75,38 +78,69 @@ clickhouse:
       name: ipv4-nethome
       role: isp
       site: kos
+      asn: 64513
+      country: ID
+      state: "Jakata Selatan"
+      city: "Ragunan"
     192.168.100.0/24:
       name: ipv4-xl-home
       role: isp
       site: rumah    
+      asn: 64512
+      country: ID
+      state: "Jawa Barat"
+      city: "Kab Sukabumi"
     192.168.11.0/24:
       name: ipv4-server-1
       role: server
       site: rumah
+      asn: 64512
+      country: ID
+      state: "Jawa Barat"
+      city: "Kab Sukabumi"
     192.168.12.0/24:
       name: ipv4-server-2
       role: server
       site: rumah
+      asn: 64512
+      country: ID
+      state: "Jawa Barat"
+      city: "Kab Sukabumi"
     172.16.10.0/24:
       name: ipv4-wifi-rumah
       role: wifi
       site: rumah
+      asn: 64512
+      country: ID
+      state: "Jawa Barat"
+      city: "Kab Sukabumi"
     172.16.20.0/24:
       name: ipv4-wifi-p2p
       role: wifi
       site: rumah
+      asn: 64512
+      country: ID
+      state: "Jawa Barat"
+      city: "Kab Sukabumi"
 
     10.8.0.0/24:
       name: ipv4-wireguard
       role: tunnel
+      asn: 64514
+      country: ID
+
     100.93.213.53/32:
       name: ipv4-tailscale-lab1
       role: tunnel
       site: rumah
+      asn: 64515
+      country: ID
     100.86.1.12/32:
       name: ipv4-tailscale-lab2
       role: tunnel
       site: kos
+      asn: 64515
+      country: ID
 
   # network-sources: []
   network-sources:
