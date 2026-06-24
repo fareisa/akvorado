@@ -54,7 +54,7 @@ clickhouse:
   orchestrator-url: http://orchestrator.akvorado.local
   prometheus-endpoint: /metrics
   asns:
-    64501: Wahaha-lab
+    0: Wahaha-lab
   networks:
       # You should customize this section with your networks. This
     # populates the Src/DstNetName/Role/Site/Region/Tenant fields.
