@@ -44,7 +44,7 @@ core:
     - |
       ClassifyConnectivityRegex(
         Interface.Name,
-        "^(ether1|eth0|enp0s31f6)$",
+        "^(ether1|eth0|enp0s31f6|nic1|nic0)$",
         "WAN"
       ) &&
       ClassifyProviderRegex(Interface.Description, "^(.*)$", "$1") &&
