@@ -10,6 +10,19 @@ metadata:
           communities: 
             - public
             # - "@public"
+    # - type: static
+    #   exporters:
+    #     ::ffff:10.8.0.1:
+    #       name: exporter1
+    #       ifindexes:
+    #         2:
+    #           name: eth0
+    #           description: Jagoan-Hosting
+    #           speed: 1000
+    #         34:
+    #           name: wg0
+    #           description: wireguard
+    #           speed: 1000      
 # routing:
 #   provider:
 #     type: none
@@ -18,7 +31,7 @@ metadata:
     # receive-buffer: 212992
 core:
   default-sampling-rate: 1
-  exporter-classifiers:
+  exporter-classifiers: 
     # This is an example. This should be customized depending on how
     # your exporters are named.
     - ClassifySite('wahaha-lab1')
@@ -31,7 +44,7 @@ core:
     - |
       ClassifyConnectivityRegex(
         Interface.Name,
-        "^(ether1)$",
+        "^(ether1|eth0|enp0s31f6)$",
         "WAN"
       ) &&
       ClassifyProviderRegex(Interface.Description, "^(.*)$", "$1") &&
