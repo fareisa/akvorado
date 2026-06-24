@@ -99,10 +99,6 @@ services:
     depends_on:
       akvorado-orchestrator:
         condition: service_healthy
-      kafka:
-        condition: service_healthy
-      clickhouse:
-        condition: service_healthy
     command: outlet http://akvorado-orchestrator:8080
     volumes:
       - akvorado-run:/run/akvorado
