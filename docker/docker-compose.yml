@@ -59,10 +59,6 @@ services:
     depends_on:
       akvorado-orchestrator:
         condition: service_healthy
-      redis:
-        condition: service_healthy
-      # clickhouse:
-      #   condition: service_healthy
     command: console http://akvorado-orchestrator:8080
     volumes:
       - akvorado-console-db:/run/akvorado
