@@ -8,21 +8,7 @@ metadata:
       credentials:
         ::/0:
           communities: 
-            - public
-            # - "@public"
-    # - type: static
-    #   exporters:
-    #     ::ffff:10.8.0.1:
-    #       name: exporter1
-    #       ifindexes:
-    #         2:
-    #           name: eth0
-    #           description: Jagoan-Hosting
-    #           speed: 1000
-    #         34:
-    #           name: wg0
-    #           description: wireguard
-    #           speed: 1000      
+            - public    
 # routing:
 #   provider:
 #     type: none
@@ -49,14 +35,6 @@ core:
       ) &&
       ClassifyProviderRegex(Interface.Description, "^(.*)$", "$1") &&
       ClassifyExternal()
-
-    # - |
-    #   ClassifyConnectivityRegex(
-    #     Interface.Name,
-    #     "^(wg1|wg0)$",
-    #     "tunnel"
-    #   ) &&
-    #   ClassifyInternal()
 
     - |
       ClassifyConnectivityRegex(

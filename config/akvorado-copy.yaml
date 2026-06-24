@@ -53,8 +53,8 @@ clickhousedb:
 clickhouse:
   orchestrator-url: http://orchestrator.akvorado.local
   prometheus-endpoint: /metrics
-  # asns:
-  #   64501: Wahaha-lab
+  asns:
+    64501: Wahaha-lab
   networks:
       # You should customize this section with your networks. This
     # populates the Src/DstNetName/Role/Site/Region/Tenant fields.
@@ -107,16 +107,6 @@ clickhouse:
       name: ipv4-tailscale-lab2
       role: tunnel
       site: kos
-
-  resolutions:
-    - interval: 0
-      ttl: 168h
-    - interval: 1m
-      ttl: 168h
-    - interval: 5m
-      ttl: 360h
-    - interval: 1h
-      ttl: 720h
 
   # network-sources: []
   network-sources:
